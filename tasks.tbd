@@ -1,0 +1,19 @@
+[x] init the project
+[.] data structures  
+    [x] nodes + edges
+    [.] parameters
+    [ ] quadtree
+[ ] architecture   
+    [ ] one run and continous compatibility
+[.] simple layout method
+    [ ] pull
+    [x] push
+    [ ] center-pull
+[ ] consume the method
+    [ ] as wasm
+    [ ] in C#
+[ ] simple render method
+[x] add parameters ...
+    [x] push thresh
+    [x] edge length
+[x] use 'em
