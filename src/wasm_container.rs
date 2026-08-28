@@ -25,6 +25,10 @@ impl WasmContainer {
         self.graph.positions_x.len()
     }
 
+    pub fn get_index_of(&self, orig_id: &str) -> Option<usize>{
+        self.graph.ids_map.get(orig_id).copied()
+    }
+
     #[wasm_bindgen(constructor)]
     pub fn new(nodes: &str, edges: &str, options: &str) -> WasmContainer {
         if let Ok(parsed_nodes) = serde_json::from_str::<Vec<Node>>(nodes) {

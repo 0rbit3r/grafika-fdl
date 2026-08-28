@@ -42,16 +42,17 @@ impl Graph {
                 if self.nodes[a].is_fixed && self.nodes[b].is_fixed {
                     continue;
                 }
-
-                let dx = self.positions_x[a] - self.positions_x[b];
-                let dy = self.positions_y[a] - self.positions_y[b];
-                let border_dist = self.get_border_distance(a, b);
                 let center_dist = get_distance(
                     self.positions_x[a],
                     self.positions_y[a],
                     self.positions_x[b],
                     self.positions_y[b],
                 );
+                if center_dist > opts.push_threshold { return }
+
+                let dx = self.positions_x[a] - self.positions_x[b];
+                let dy = self.positions_y[a] - self.positions_y[b];
+                let border_dist = self.get_border_distance(a, b);
 
                 let force = push_force(border_dist) - push_force(opts.push_threshold);
 
@@ -83,8 +84,10 @@ impl Graph {
 
     fn update_positions(&mut self) {
         for i in 0..self.positions_x.len() {
-            self.positions_x[i] += self.nodes[i].forces_x;
-            self.positions_y[i] += self.nodes[i].forces_y;
+            self.positions_x[i] += 1.0; //self.nodes[i].forces_x;
+//            self.positions_y[i] += self.nodes[i].forces_y;
+//            self.nodes[i].forces_x = 0;
+//            self.nodes[i].forces_y = 0;
         }
     }
 
@@ -102,7 +105,7 @@ impl Graph {
 fn get_distance(x1: f32, y1: f32, x2: f32, y2: f32) -> f32 {
     let dx = x1 - x2;
     let dy = y1 - y2;
-    dx.hypot(dy).max(0.01) //prevent division by 0
+    dx.hypot(dy).max(0.001) //prevent division by 0
 }
 
 fn push_force(border_dist: f32) -> f32 {
